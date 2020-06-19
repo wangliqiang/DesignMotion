@@ -1,4 +1,4 @@
-package com.app.design_motion.ui.EleUI
+package com.app.design_motion.ui.eleUI
 
 import android.os.Bundle
 import android.view.LayoutInflater

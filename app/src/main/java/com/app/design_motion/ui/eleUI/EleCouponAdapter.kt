@@ -1,4 +1,4 @@
-package com.app.design_motion.ui.EleUI
+package com.app.design_motion.ui.eleUI
 
 import com.app.design_motion.R
 import com.app.design_motion.bean.DataBean

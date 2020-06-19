@@ -5,9 +5,9 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.EleUI.EleUIFragment">
+    tools:context=".ui.eleUI.EleUIFragment">
 
-    <com.app.design_motion.widget.ElemeNestedScrollLayout
+    <com.app.design_motion.widget.NestedScrollLayout
         android:id="@+id/eleme_nested_scroll_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,6 +19,6 @@
         <include layout="@layout/ele_slide_layout" />
         <!--购物内容-->
         <include layout="@layout/ele_shop_cart_layout" />
-    </com.app.design_motion.widget.ElemeNestedScrollLayout>
+    </com.app.design_motion.widget.NestedScrollLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

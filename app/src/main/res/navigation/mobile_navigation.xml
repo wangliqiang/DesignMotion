@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.app.design_motion.ui.EleUI.EleUIFragment"
+        android:name="com.app.design_motion.ui.eleUI.EleUIFragment"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_ele_ui" />
 </navigation>

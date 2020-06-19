@@ -1,4 +1,4 @@
-package com.app.design_motion.ui.EleUI
+package com.app.design_motion.ui.eleUI
 
 import android.os.Bundle
 import android.util.TypedValue
@@ -10,7 +10,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.app.design_motion.R
-import com.app.design_motion.widget.ElemeNestedScrollLayout
+import com.app.design_motion.widget.NestedScrollLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.ele_header_layout.*
@@ -72,7 +72,7 @@ class EleUIFragment : Fragment() {
         }
 
         eleme_nested_scroll_layout.setProgressUpdateListener(object :
-            ElemeNestedScrollLayout.ProgressUpdateListener {
+            NestedScrollLayout.ProgressUpdateListener {
             override fun onUpCollapsedContentTransProUpdate(float: Float) {
             }
 

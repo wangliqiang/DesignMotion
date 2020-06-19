@@ -12,7 +12,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.math.MathUtils
-import androidx.core.view.NestedScrollingChild2
+import androidx.core.view.NestedScrollingParent2
 import androidx.core.view.NestedScrollingParentHelper
 import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
@@ -23,9 +23,9 @@ import kotlinx.android.synthetic.main.ele_shop_cart_layout.view.*
 import kotlinx.android.synthetic.main.ele_slide_layout.view.*
 import kotlinx.android.synthetic.main.ele_top_bar_layout.view.*
 
-class ElemeNestedScrollLayout @JvmOverloads constructor(
+class NestedScrollLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), NestedScrollingChild2 {
+) : FrameLayout(context, attrs, defStyleAttr), NestedScrollingParent2 {
 
     val ANIM_DURATION_FRACTION: Long = 200
 
@@ -169,7 +169,8 @@ class ElemeNestedScrollLayout @JvmOverloads constructor(
     }
 
     // NestedScrollingParent
-    override fun onStartNestedScroll(child: View?, target: View?, nestedScrollAxes: Int): Boolean {
+    override fun onStartNestedScroll(child: View, target: View, axes: Int): Boolean {
+
         return onStartNestedScroll(child, target, nestedScrollAxes, ViewCompat.TYPE_TOUCH)
     }
 
@@ -177,7 +178,7 @@ class ElemeNestedScrollLayout @JvmOverloads constructor(
         onNestedScrollAccepted(child, target, nestedScrollAxes, ViewCompat.TYPE_TOUCH)
     }
 
-    override fun onStopNestedScroll(target: View?) {
+    override fun onStopNestedScroll(target: View) {
         onStopNestedScroll(target!!, ViewCompat.TYPE_TOUCH)
     }
 
@@ -203,7 +204,7 @@ class ElemeNestedScrollLayout @JvmOverloads constructor(
     }
 
     override fun onNestedFling(
-        target: View?,
+        target: View,
         velocityX: Float,
         velocityY: Float,
         consumed: Boolean
@@ -211,7 +212,7 @@ class ElemeNestedScrollLayout @JvmOverloads constructor(
         return false
     }
 
-    override fun onNestedPreFling(target: View?, velocityX: Float, velocityY: Float): Boolean {
+    override fun onNestedPreFling(target: View, velocityX: Float, velocityY: Float): Boolean {
         if (velocityY < 0) {
             val translationY: Float = cl_content.getTranslationY()
             val dy = translationY - velocityY
@@ -235,17 +236,12 @@ class ElemeNestedScrollLayout @JvmOverloads constructor(
     }
 
     // NestedScrollingChild
-    fun onStartNestedScroll(
-        child: View?,
-        target: View?,
-        axes: Int,
-        type: Int
-    ): Boolean {
+    override fun onStartNestedScroll(child: View, target: View, axes: Int, type: Int): Boolean {
         //只接受内容View的垂直滑动
         return child?.id == cl_content.id && axes == ViewCompat.SCROLL_AXIS_VERTICAL
     }
 
-    fun onNestedScrollAccepted(
+    override fun onNestedScrollAccepted(
         child: View,
         target: View,
         axes: Int,
@@ -259,7 +255,7 @@ class ElemeNestedScrollLayout @JvmOverloads constructor(
     }
 
 
-    fun onStopNestedScroll(target: View, type: Int) {
+    override fun onStopNestedScroll(target: View, type: Int) {
         nestedScrollingParentHelper.onStopNestedScroll(target, type)
         //如果不是从初始状态转换到展开状态过程触发返回
         //如果不是从初始状态转换到展开状态过程触发返回
@@ -277,17 +273,18 @@ class ElemeNestedScrollLayout @JvmOverloads constructor(
         }
     }
 
-    fun onNestedScroll(
-        target: View?,
+    override fun onNestedScroll(
+        target: View,
         dxConsumed: Int,
         dyConsumed: Int,
         dxUnconsumed: Int,
         dyUnconsumed: Int,
         type: Int
     ) {
+
     }
 
-    fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
+    override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
         val contentTransY = cl_content.translationY - dy
 
         //处理上滑
@@ -578,38 +575,5 @@ class ElemeNestedScrollLayout @JvmOverloads constructor(
         fun onDownContentAlphaProUpdate(float: Float)
 
         fun onDownShopBarTransProUpdate(float: Float)
-    }
-
-    override fun dispatchNestedScroll(
-        dxConsumed: Int,
-        dyConsumed: Int,
-        dxUnconsumed: Int,
-        dyUnconsumed: Int,
-        offsetInWindow: IntArray?,
-        type: Int
-    ): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun dispatchNestedPreScroll(
-        dx: Int,
-        dy: Int,
-        consumed: IntArray?,
-        offsetInWindow: IntArray?,
-        type: Int
-    ): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun stopNestedScroll(type: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun hasNestedScrollingParent(type: Int): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun startNestedScroll(axes: Int, type: Int): Boolean {
-        TODO("Not yet implemented")
     }
 }
