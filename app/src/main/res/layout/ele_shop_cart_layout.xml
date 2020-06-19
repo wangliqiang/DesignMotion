@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_shop_bar"
+    android:layout_width="match_parent"
+    android:layout_height="54dp"
+    android:layout_gravity="bottom">
+    <View
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#333333"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_sum"
+        app:layout_constraintEnd_toStartOf="@+id/tv_sum"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_sum" />
+
+    <TextView
+        android:id="@+id/tv_sum"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:background="#535356"
+        android:gravity="center"
+        android:text="￥0元起送"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/layer_cart_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:text="未选购商品"
+        android:textColor="#999"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_cart"
+        app:layout_constraintTop_toTopOf="@+id/view3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="另需配送费9元"
+        android:textColor="#999"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_cart" />
+</androidx.constraintlayout.widget.ConstraintLayout>

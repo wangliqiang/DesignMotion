@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.EleUI.EleUIFragment">
+
+    <com.app.design_motion.widget.ElemeNestedScrollLayout
+        android:id="@+id/eleme_nested_scroll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- header -->
+        <include layout="@layout/ele_header_layout" />
+        <!-- 顶部搜索栏 -->
+        <include layout="@layout/ele_top_bar_layout" />
+        <!--滑动内容-->
+        <include layout="@layout/ele_slide_layout" />
+        <!--购物内容-->
+        <include layout="@layout/ele_shop_cart_layout" />
+    </com.app.design_motion.widget.ElemeNestedScrollLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

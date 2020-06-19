@@ -1,0 +1,22 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Title">
+        <item name="android:textSize">@dimen/font_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/title_text_color</item>
+    </style>
+
+    <style name="ToolbarAction">
+        <item name="android:textColor">@color/text_color_light</item>
+        <item name="android:textSize">@dimen/font_medium</item>
+    </style>
+</resources>
