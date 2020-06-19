@@ -27,11 +27,12 @@ class NestedScrollLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), NestedScrollingParent2 {
 
-    val ANIM_DURATION_FRACTION: Long = 200
+    val ANIM_DURATION_FRACTION: Long = 200L
 
     private var progressUpdateListener: ProgressUpdateListener? = null
 
-    private var nestedScrollingParentHelper: NestedScrollingParentHelper
+    private var nestedScrollingParentHelper: NestedScrollingParentHelper =
+        NestedScrollingParentHelper(this)
     private var iconArgbEvaluator: ArgbEvaluator //返回icon、拼团icon颜色渐变的Evaluator
     private var topBarArgbEvaluator: ArgbEvaluator //topbar颜色渐变的Evaluator
     private var reboundedAnim: ValueAnimator //回弹动画
@@ -50,7 +51,6 @@ class NestedScrollLayout @JvmOverloads constructor(
 
 
     init {
-        nestedScrollingParentHelper = NestedScrollingParentHelper(this)
         iconArgbEvaluator = ArgbEvaluator()
         topBarArgbEvaluator = ArgbEvaluator()
 
@@ -235,7 +235,7 @@ class NestedScrollLayout @JvmOverloads constructor(
         return nestedScrollingParentHelper.nestedScrollAxes
     }
 
-    // NestedScrollingChild
+    // NestedScrollingParent2
     override fun onStartNestedScroll(child: View, target: View, axes: Int, type: Int): Boolean {
         //只接受内容View的垂直滑动
         return child?.id == cl_content.id && axes == ViewCompat.SCROLL_AXIS_VERTICAL

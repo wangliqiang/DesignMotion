@@ -14,4 +14,5 @@
     <color name="title_text_color">#4d4d4d</color>
     <color name="text_color_light">#eee</color>
     <color name="window_background">@android:color/white</color>
+    <color name="mask">#99000000</color>
 </resources>

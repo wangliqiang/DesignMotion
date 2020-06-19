@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.app.design_motion.R
+import com.app.design_motion.widget.FoodNestedScrollLayout
 import com.app.design_motion.widget.NestedScrollLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jaeger.library.StatusBarUtil
@@ -41,7 +42,7 @@ class EleUIFragment : Fragment() {
     private fun initEvent() {
 
         adapterEle?.setOnItemChildClickListener { adapter, view, position ->
-            eleme_nested_scroll_layout.restore(ANIM_DURATION_FRACTION)
+            nested_scroll_layout.restore(ANIM_DURATION_FRACTION)
         }
 
         rv_collasped.layoutManager = LinearLayoutManager(context)
@@ -68,10 +69,10 @@ class EleUIFragment : Fragment() {
         }
 
         tv_coupon_count.setOnClickListener {
-            eleme_nested_scroll_layout.expand(ANIM_DURATION_FRACTION)
+            nested_scroll_layout.expand(ANIM_DURATION_FRACTION)
         }
 
-        eleme_nested_scroll_layout.setProgressUpdateListener(object :
+        nested_scroll_layout.setProgressUpdateListener(object :
             NestedScrollLayout.ProgressUpdateListener {
             override fun onUpCollapsedContentTransProUpdate(float: Float) {
             }
@@ -97,6 +98,32 @@ class EleUIFragment : Fragment() {
             }
         })
 
+        food_nested_scroll_layout.setProgressUpdateListener(object :
+            FoodNestedScrollLayout.ProgressUpdateListener {
+            override fun onDownContentCloseProUpdate(pro: Float) {
+                nested_scroll_layout.scaleX = 0.9f + (pro * 0.1f)
+                nested_scroll_layout.scaleY = 0.9f + (pro * 0.1f)
+                v_mask.alpha = 1 - pro
+                if (pro == 1f) {
+                    v_mask.visibility = View.GONE
+                }else{
+                    v_mask.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        iv_close.setOnClickListener {
+            food_nested_scroll_layout.close(ANIM_DURATION_FRACTION)
+        }
+        v_mask.setOnClickListener{
+            food_nested_scroll_layout.close(ANIM_DURATION_FRACTION)
+        }
+        iv_food_expand.setOnClickListener {
+            food_nested_scroll_layout.expand(ANIM_DURATION_FRACTION)
+        }
+        iv_close.isClickable = false
+        v_mask.isClickable = false
+        iv_food_expand.isClickable = false
     }
 
     private fun initData() {
@@ -113,6 +140,6 @@ class EleUIFragment : Fragment() {
     var ANIM_DURATION_FRACTION: Long = 200
 
     fun showFoodLayout() {
-        eleme_nested_scroll_layout.restore(ANIM_DURATION_FRACTION)
+        food_nested_scroll_layout.restore(ANIM_DURATION_FRACTION)
     }
 }
