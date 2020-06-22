@@ -13,37 +13,33 @@ import java.util.*
 class EleFoodFragment : Fragment() {
     private var mAdapterEle: EleFoodAdapter? = null
     private var mDatas = ArrayList<Int>()
-    private lateinit var mFooterView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mFooterView = inflater.inflate(R.layout.item_food_footer_layout, container, false)
         return inflater.inflate(R.layout.fragment_ele_food, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initData()
-        initEvent()
-    }
-
-    private fun initEvent() {
-        food_rv.layoutManager = LinearLayoutManager(context)
-        mAdapterEle?.addFooterView(mFooterView)
-        food_rv.adapter = mAdapterEle
-        mAdapterEle?.setOnItemClickListener { adapter, view, position ->
-            (activity as EleUIActivity)?.showFoodLayout()
-        }
     }
 
     private fun initData() {
+
         for (i in 0..32) {
             mDatas.add(i)
         }
         mAdapterEle = EleFoodAdapter(mDatas)
+        food_rv.layoutManager = LinearLayoutManager(context)
+        val footerView = layoutInflater.inflate(R.layout.item_food_footer_layout, food_rv, false)
+        mAdapterEle?.addFooterView(footerView)
+        food_rv.adapter = mAdapterEle
+        mAdapterEle?.setOnItemClickListener { adapter, view, position ->
+            (activity as EleUIActivity)?.showFoodLayout()
+        }
     }
 
     companion object {
