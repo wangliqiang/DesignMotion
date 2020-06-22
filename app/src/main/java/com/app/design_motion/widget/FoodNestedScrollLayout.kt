@@ -1,5 +1,7 @@
 package com.app.design_motion.widget
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
@@ -8,7 +10,6 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
-import androidx.core.animation.addListener
 import androidx.core.math.MathUtils
 import androidx.core.view.NestedScrollingParent2
 import androidx.core.view.NestedScrollingParentHelper
@@ -28,7 +29,7 @@ class FoodNestedScrollLayout @JvmOverloads constructor(
         NestedScrollingParentHelper(this)
 
     private var reboundedAnim: ValueAnimator //回弹动画
-    private var restoreOrExpandAnimator: ValueAnimator // 收起或展开折叠内容时执行的动画
+    private var restoreOrExpandOrCloseAnimator: ValueAnimator // 收起或展开折叠内容时执行的动画
 
     private var shopBarHeight = 0f //shopBar高度
     private var ivExpandHegiht = 0f //ivExpand部分高度
@@ -50,28 +51,30 @@ class FoodNestedScrollLayout @JvmOverloads constructor(
         }
         reboundedAnim.duration = ANIM_DURATION_FRACTION
 
-        restoreOrExpandAnimator = ValueAnimator()
-        restoreOrExpandAnimator.interpolator = AccelerateInterpolator()
-        restoreOrExpandAnimator.addUpdateListener {
+        restoreOrExpandOrCloseAnimator = ValueAnimator()
+        restoreOrExpandOrCloseAnimator.interpolator = AccelerateInterpolator()
+        restoreOrExpandOrCloseAnimator.addUpdateListener {
             translation(food_ns_view, it.animatedValue as Float)
             alphaTransView(food_ns_view.translationY)
             if (progressUpdateListener != null) {
                 progressUpdateListener?.onDownContentCloseProUpdate(getDownContentClosePro())
             }
         }
-        restoreOrExpandAnimator.addListener {
-            val alpha = if (food_ns_view.translationY >= measuredHeight) 0 else 1
-            setAlpha(iv_small_close, alpha.toFloat())
-            setAlpha(iv_small_share, alpha.toFloat())
-        }
+        restoreOrExpandOrCloseAnimator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                val alpha = if (food_ns_view.translationY >= measuredHeight) 0 else 1
+                setAlpha(iv_small_close, alpha.toFloat())
+                setAlpha(iv_small_share, alpha.toFloat())
+            }
+        })
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        if (restoreOrExpandAnimator.isStarted) {
-            restoreOrExpandAnimator.cancel()
-            restoreOrExpandAnimator.removeAllUpdateListeners()
-            restoreOrExpandAnimator.removeAllListeners()
+        if (restoreOrExpandOrCloseAnimator.isStarted) {
+            restoreOrExpandOrCloseAnimator.cancel()
+            restoreOrExpandOrCloseAnimator.removeAllUpdateListeners()
+            restoreOrExpandOrCloseAnimator.removeAllListeners()
         }
         if (reboundedAnim.isStarted) {
             reboundedAnim.cancel()
@@ -83,21 +86,21 @@ class FoodNestedScrollLayout @JvmOverloads constructor(
         iv_small_close.isClickable = true
         v_mask.isClickable = true
         iv_food_expand.isClickable = true
-        if (restoreOrExpandAnimator.isStarted) {
-            restoreOrExpandAnimator.cancel()
+        if (restoreOrExpandOrCloseAnimator.isStarted) {
+            restoreOrExpandOrCloseAnimator.cancel()
         }
-        restoreOrExpandAnimator.setFloatValues(food_ns_view.translationY, contentTransY)
-        restoreOrExpandAnimator.duration = dur
-        restoreOrExpandAnimator.start()
+        restoreOrExpandOrCloseAnimator.setFloatValues(food_ns_view.translationY, contentTransY)
+        restoreOrExpandOrCloseAnimator.duration = dur
+        restoreOrExpandOrCloseAnimator.start()
     }
 
     fun expand(dur: Long) {
-        if (restoreOrExpandAnimator.isStarted) {
-            restoreOrExpandAnimator.cancel()
+        if (restoreOrExpandOrCloseAnimator.isStarted) {
+            restoreOrExpandOrCloseAnimator.cancel()
         }
-        restoreOrExpandAnimator.setFloatValues(food_ns_view.translationY, 0f)
-        restoreOrExpandAnimator.duration = dur
-        restoreOrExpandAnimator.start()
+        restoreOrExpandOrCloseAnimator.setFloatValues(food_ns_view.translationY, 0f)
+        restoreOrExpandOrCloseAnimator.duration = dur
+        restoreOrExpandOrCloseAnimator.start()
     }
 
     fun close(dur: Long) {
@@ -105,12 +108,15 @@ class FoodNestedScrollLayout @JvmOverloads constructor(
         iv_small_close.isClickable = false
         v_mask.isClickable = false
         iv_food_expand.isClickable = false
-        if (restoreOrExpandAnimator.isStarted) {
-            restoreOrExpandAnimator.cancel()
+        if (restoreOrExpandOrCloseAnimator.isStarted) {
+            restoreOrExpandOrCloseAnimator.cancel()
         }
-        restoreOrExpandAnimator.setFloatValues(food_ns_view.translationY, measuredHeight.toFloat())
-        restoreOrExpandAnimator.duration = dur
-        restoreOrExpandAnimator.start()
+        restoreOrExpandOrCloseAnimator.setFloatValues(
+            food_ns_view.translationY,
+            measuredHeight.toFloat()
+        )
+        restoreOrExpandOrCloseAnimator.duration = dur
+        restoreOrExpandOrCloseAnimator.start()
     }
 
     private fun alphaTransView(transY: Float) {
@@ -320,7 +326,7 @@ class FoodNestedScrollLayout @JvmOverloads constructor(
     override fun onStopNestedScroll(target: View, type: Int) {
         nestedScrollingParentHelper.onStopNestedScroll(target, type)
         val translationY = target.translationY
-        if (translationY == contentTransY || reboundedAnim.isStarted || restoreOrExpandAnimator.isStarted) {
+        if (translationY == contentTransY || reboundedAnim.isStarted || restoreOrExpandOrCloseAnimator.isStarted) {
             return
         }
         var dur: Long
