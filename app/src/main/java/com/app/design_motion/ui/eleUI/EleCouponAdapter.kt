@@ -3,7 +3,7 @@ package com.app.design_motion.ui.eleUI
 import com.app.design_motion.R
 import com.app.design_motion.bean.DataBean
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 
 class EleCouponAdapter() : BaseMultiItemQuickAdapter<DataBean, BaseViewHolder>(dataList) {
 
@@ -13,6 +13,8 @@ class EleCouponAdapter() : BaseMultiItemQuickAdapter<DataBean, BaseViewHolder>(d
         addItemType(COUPON, R.layout.item_text_coupon_layout)
         addItemType(PUBLISH, R.layout.item_text_publish_layout)
         addItemType(VIP, R.layout.item_vip_layout)
+
+        addChildClickViewIds(R.id.iv_item_text_close)
     }
 
     companion object {
@@ -22,7 +24,7 @@ class EleCouponAdapter() : BaseMultiItemQuickAdapter<DataBean, BaseViewHolder>(d
         val PUBLISH = 3
         val VIP = 4
 
-        val dataList = listOf(
+        val dataList = mutableListOf(
             DataBean(FIRST_TITLE, "优惠", "", "", ""),
             DataBean(COUPON, "", "特价", "特价商品15.5元起", ""),
             DataBean(COUPON, "", "会员", "超级会员领7元无门槛红包", ""),
@@ -35,21 +37,20 @@ class EleCouponAdapter() : BaseMultiItemQuickAdapter<DataBean, BaseViewHolder>(d
         )
     }
 
-    override fun convert(helper: BaseViewHolder, item: DataBean) {
+    override fun convert(holder: BaseViewHolder, item: DataBean) {
         when (item.type) {
             FIRST_TITLE -> {
-                helper.setText(R.id.tv_item_text_first_title, item.title)
-                helper.addOnClickListener(R.id.iv_item_text_close)
+                holder.setText(R.id.tv_item_text_first_title, item.title)
             }
             TITLE -> {
-                helper.setText(R.id.tv_item_text_title, item.title);
+                holder.setText(R.id.tv_item_text_title, item.title);
             }
             COUPON -> {
-                helper.setText(R.id.tv_item_text_coupon_title, item.couponTitle)
-                helper.setText(R.id.tv_item_text_coupon_title, item.couponContent)
+                holder.setText(R.id.tv_item_text_coupon_title, item.couponTitle)
+                holder.setText(R.id.tv_item_text_coupon_title, item.couponContent)
             }
             PUBLISH -> {
-                helper.setText(R.id.tv_item_text_publish, item.publishContent);
+                holder.setText(R.id.tv_item_text_publish, item.publishContent);
             }
             else -> {
             }

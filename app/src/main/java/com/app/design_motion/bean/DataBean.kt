@@ -9,8 +9,7 @@ data class DataBean(
     var couponContent: String,
     var publishContent: String
 ) : MultiItemEntity {
-    override fun getItemType(): Int {
-        return type
-    }
+    override val itemType: Int
+        get() = type
 }
 

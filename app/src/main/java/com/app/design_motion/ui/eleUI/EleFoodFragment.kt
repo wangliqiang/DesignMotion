@@ -13,7 +13,7 @@ import java.util.*
 class EleFoodFragment : Fragment() {
     private var mAdapterEle: EleFoodAdapter? = null
     private var mDatas = ArrayList<Int>()
-    private var mFooterView: View? = null
+    private lateinit var mFooterView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
