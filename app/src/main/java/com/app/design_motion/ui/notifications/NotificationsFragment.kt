@@ -28,4 +28,9 @@ class NotificationsFragment : Fragment() {
         })
         return root
     }
+
+    companion object{
+        @JvmStatic
+        fun newInstance() = NotificationsFragment()
+    }
 }

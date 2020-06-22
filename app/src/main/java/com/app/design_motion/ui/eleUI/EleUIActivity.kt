@@ -1,12 +1,9 @@
 package com.app.design_motion.ui.eleUI
 
 import android.os.Bundle
-import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.app.design_motion.R
@@ -14,30 +11,24 @@ import com.app.design_motion.widget.FoodNestedScrollLayout
 import com.app.design_motion.widget.NestedScrollLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jaeger.library.StatusBarUtil
+import kotlinx.android.synthetic.main.activity_ele_ui.*
 import kotlinx.android.synthetic.main.ele_header_layout.*
 import kotlinx.android.synthetic.main.ele_slide_layout.*
 import kotlinx.android.synthetic.main.ele_top_bar_layout.*
-import kotlinx.android.synthetic.main.fragment_ele_ui.*
 
-class EleUIFragment : Fragment() {
+class EleUIActivity : AppCompatActivity() {
 
     val titles = listOf("点餐", "评价", "商家")
     var adapterEle: EleCouponAdapter? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_ele_ui, container, false)
-        return root
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_ele_ui)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         initData()
         initEvent()
     }
+
 
     private fun initEvent() {
 
@@ -45,10 +36,10 @@ class EleUIFragment : Fragment() {
             nested_scroll_layout.restore(ANIM_DURATION_FRACTION)
         }
 
-        rv_collasped.layoutManager = LinearLayoutManager(context)
+        rv_collasped.layoutManager = LinearLayoutManager(this)
         rv_collasped.adapter = adapterEle
 
-        viewPager2.adapter = object : FragmentStateAdapter(childFragmentManager, lifecycle) {
+        viewPager2.adapter = object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
             override fun getItemCount(): Int = 3
 
             override fun createFragment(position: Int): Fragment {
@@ -65,7 +56,7 @@ class EleUIFragment : Fragment() {
             }).attach()
 
         iv_back.setOnClickListener {
-            Navigation.findNavController(it).popBackStack()
+            finish()
         }
 
         tv_coupon_count.setOnClickListener {
@@ -82,9 +73,9 @@ class EleUIFragment : Fragment() {
 
             override fun onUpAlphaGradientProUpdate(float: Float) {
                 if (float > 0.5f) {
-                    StatusBarUtil.setLightMode(activity)
+                    StatusBarUtil.setLightMode(this@EleUIActivity)
                 } else {
-                    StatusBarUtil.setDarkMode(activity)
+                    StatusBarUtil.setDarkMode(this@EleUIActivity)
                 }
             }
 
@@ -106,22 +97,22 @@ class EleUIFragment : Fragment() {
                 v_mask.alpha = 1 - pro
                 if (pro == 1f) {
                     v_mask.visibility = View.GONE
-                }else{
+                } else {
                     v_mask.visibility = View.VISIBLE
                 }
             }
         })
 
-        iv_close.setOnClickListener {
+        iv_small_close.setOnClickListener {
             food_nested_scroll_layout.close(ANIM_DURATION_FRACTION)
         }
-        v_mask.setOnClickListener{
+        v_mask.setOnClickListener {
             food_nested_scroll_layout.close(ANIM_DURATION_FRACTION)
         }
         iv_food_expand.setOnClickListener {
             food_nested_scroll_layout.expand(ANIM_DURATION_FRACTION)
         }
-        iv_close.isClickable = false
+        iv_small_close.isClickable = false
         v_mask.isClickable = false
         iv_food_expand.isClickable = false
     }
@@ -130,14 +121,7 @@ class EleUIFragment : Fragment() {
         adapterEle = EleCouponAdapter()
     }
 
-    fun dp2px(dpVal: Float): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dpVal, resources.displayMetrics
-        ).toInt()
-    }
-
-    var ANIM_DURATION_FRACTION: Long = 200
+    private var ANIM_DURATION_FRACTION: Long = 200
 
     fun showFoodLayout() {
         food_nested_scroll_layout.restore(ANIM_DURATION_FRACTION)

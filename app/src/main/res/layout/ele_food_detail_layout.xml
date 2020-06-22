@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="川辣双鸡堡1份+麦辣鸡腿汉堡1个+板烧鸡腿堡1个+那么大鸡排1份+麦辣鸡翅4块+中薯条1份+大可乐1杯*660ml+大柠檬红茶1杯*660ml+大雪碧1杯*660ml"
+            android:text="川辣双鸡堡1份\n麦辣鸡腿汉堡1个\n板烧鸡腿堡1个\n那么大鸡排1份\n麦辣鸡翅4块\n中薯条1份\n大可乐1杯660ml\n大柠檬红茶1杯*660ml\n大雪碧1杯*660ml"
             android:textColor="#666"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"

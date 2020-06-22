@@ -1,5 +1,6 @@
 package com.app.design_motion.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.navigation.Navigation
 import com.app.design_motion.R
 import com.app.design_motion.base.BaseFragment
 import com.app.design_motion.common.listener.BottomNavigationViewListener
+import com.app.design_motion.ui.eleUI.EleUIActivity
 import com.jaeger.library.StatusBarUtil
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -48,9 +50,12 @@ class HomeFragment : BaseFragment() {
         }
 
         elm.setOnClickListener {
-            Navigation.findNavController(it)
-                .navigate(R.id.action_navigation_home_to_dashboardFragment)
-            bottomNavListener?.hideBottomNavigationView()
+            startActivity(Intent(context, EleUIActivity::class.java))
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = HomeFragment()
     }
 }

@@ -35,6 +35,7 @@ class EleFoodFragment : Fragment() {
         mAdapterEle?.addFooterView(mFooterView)
         food_rv.adapter = mAdapterEle
         mAdapterEle?.setOnItemClickListener { adapter, view, position ->
+            (activity as EleUIActivity)?.showFoodLayout()
         }
     }
 

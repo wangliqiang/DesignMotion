@@ -10,9 +10,6 @@
         android:name="com.app.design_motion.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_dashboardFragment"
-            app:destination="@id/navigation_dashboard"/>
     </fragment>
 
     <fragment
@@ -26,10 +23,4 @@
         android:name="com.app.design_motion.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.app.design_motion.ui.eleUI.EleUIFragment"
-        android:label="fragment_dashboard"
-        tools:layout="@layout/fragment_ele_ui" />
 </navigation>

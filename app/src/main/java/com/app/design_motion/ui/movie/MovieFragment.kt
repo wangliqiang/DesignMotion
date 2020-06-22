@@ -18,6 +18,7 @@ import com.app.design_motion.base.BaseFragment
 import com.app.design_motion.common.*
 import com.app.design_motion.common.listener.BottomNavigationViewListener
 import com.app.design_motion.data.model.Subject
+import com.app.design_motion.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 class MovieFragment : BaseFragment(), MovieAdapter.ViewHolder.Delegate {
@@ -36,7 +37,6 @@ class MovieFragment : BaseFragment(), MovieAdapter.ViewHolder.Delegate {
         val root = inflater.inflate(R.layout.fragment_movie, container, false)
         return root
     }
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -191,4 +191,8 @@ class MovieFragment : BaseFragment(), MovieAdapter.ViewHolder.Delegate {
         return transaction
     }
 
+    companion object{
+        @JvmStatic
+        fun newInstance() = HomeFragment()
+    }
 }

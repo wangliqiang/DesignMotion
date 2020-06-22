@@ -14,11 +14,9 @@ import androidx.core.view.NestedScrollingParent2
 import androidx.core.view.NestedScrollingParentHelper
 import androidx.core.view.ViewCompat
 import com.app.design_motion.R
+import kotlinx.android.synthetic.main.activity_ele_ui.view.*
 import kotlinx.android.synthetic.main.ele_food_detail_layout.view.*
 import kotlinx.android.synthetic.main.ele_shop_buy_layout.view.*
-import kotlinx.android.synthetic.main.ele_slide_layout.view.*
-import kotlinx.android.synthetic.main.ele_top_bar_layout.view.*
-import kotlinx.android.synthetic.main.fragment_ele_ui.view.*
 
 class FoodNestedScrollLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = -1
@@ -63,8 +61,8 @@ class FoodNestedScrollLayout @JvmOverloads constructor(
         }
         restoreOrExpandAnimator.addListener {
             val alpha = if (food_ns_view.translationY >= measuredHeight) 0 else 1
-            setAlpha(iv_close, alpha.toFloat())
-            setAlpha(iv_share, alpha.toFloat())
+            setAlpha(iv_small_close, alpha.toFloat())
+            setAlpha(iv_small_share, alpha.toFloat())
         }
     }
 
@@ -82,7 +80,7 @@ class FoodNestedScrollLayout @JvmOverloads constructor(
     }
 
     fun restore(dur: Long) {
-        iv_close.isClickable = true
+        iv_small_close.isClickable = true
         v_mask.isClickable = true
         iv_food_expand.isClickable = true
         if (restoreOrExpandAnimator.isStarted) {
@@ -104,7 +102,7 @@ class FoodNestedScrollLayout @JvmOverloads constructor(
 
     fun close(dur: Long) {
         food_ns_view.scrollTo(0, 0)
-        iv_close.isClickable = false
+        iv_small_close.isClickable = false
         v_mask.isClickable = false
         iv_food_expand.isClickable = false
         if (restoreOrExpandAnimator.isStarted) {
@@ -126,27 +124,27 @@ class FoodNestedScrollLayout @JvmOverloads constructor(
         setAlpha(t_good_comm_rate, upExpandTransPro)
         setAlpha(t_comm_detail, upExpandTransPro)
         setAlpha(t_food_detail, upExpandTransPro)
-        setAlpha(t_comm_count, upExpandTransPro)
-        setAlpha(view_line, upExpandTransPro)
+        setAlpha(t_comm_count, 1 - upExpandTransPro)
+        setAlpha(view_line, 1 - upExpandTransPro)
 
         // 位移share，close两个Icon,设置展开icon透明度
-        if (transY < contentTransY) {
-            val ivExpandUpTransY = upExpandTransPro * contentTransY
+        if (transY <= contentTransY) {
+            val ivExpandUpTransY = upExpandTransPro * -contentTransY
             translation(iv_food_expand, ivExpandUpTransY)
             setAlpha(iv_food_expand, 1 - upExpandTransPro)
 
             val iconTransY =
                 upEndIconTransY + (1 - upExpandTransPro) * (iconTransY - upEndIconTransY)
 
-            translation(iv_share, iconTransY)
-            translation(iv_close, iconTransY)
-        } else if (transY < contentTransY && transY <= measuredHeight) {
+            translation(iv_small_share, iconTransY)
+            translation(iv_small_close, iconTransY)
+        } else if (transY > contentTransY && transY <= measuredHeight) {
             val ivExpandDowndTransY = (1 - getDownIvExpandPro()) * ivExpandHegiht
             translation(iv_food_expand, ivExpandDowndTransY)
 
             val iconTransY = transY + dp2px(16f)
-            translation(iv_share, iconTransY)
-            translation(iv_close, iconTransY)
+            translation(iv_small_share, iconTransY)
+            translation(iv_small_close, iconTransY)
         }
     }
 

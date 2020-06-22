@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
-    android:tag="ele_ui"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    tools:context=".ui.eleUI.EleUIFragment">
+    android:tag="ele_ui"
+    tools:context=".ui.eleUI.EleUIActivity">
 
     <com.app.design_motion.widget.NestedScrollLayout
         android:id="@+id/nested_scroll_layout"

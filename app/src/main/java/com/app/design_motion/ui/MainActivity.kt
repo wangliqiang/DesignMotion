@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationViewListener {
         val navController = findNavController(R.id.nav_host_fragment)
         // menu should be considered as top level destinations.
         navView.setupWithNavController(navController)
-
     }
 
     override fun hideBottomNavigationView() {
